@@ -9,7 +9,6 @@ if (!isset($_SESSION['usuarios'])) {
 
 $mensaje = "";
 
-// Revisamos si se presiono el boton
 if (isset($_POST['registrar'])) {
 
     // Obtenemos los datos del formulario
@@ -18,28 +17,23 @@ if (isset($_POST['registrar'])) {
     $password = $_POST['password'];
     $confirmar = $_POST['confirmar'];
 
-    // Comprobamos que todos los campos tengan informacion
     if ($nombre == "" || $usuario == "" || $password == "" || $confirmar == "") {
         $mensaje = "Todos los campos son obligatorios.";
     }
 
-    // Comprobamos la longitud de la contraseña
     elseif (strlen($password) < 6) {
         $mensaje = "La contraseña debe tener al menos 6 caracteres.";
     }
 
-    // Revisamos que las contraseñas sean iguales
     elseif ($password != $confirmar) {
         $mensaje = "Las contraseñas no coinciden.";
     }
 
-    // Verificamos que el usuario no exista
     elseif (isset($_SESSION['usuarios'][$usuario])) {
         $mensaje = "Este usuario ya esta registrado.";
     }
 
     else {
-        // Protegemos la contraseña
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
         // Guardamos los datos del usuario
@@ -63,15 +57,16 @@ if (isset($_POST['registrar'])) {
 </head>
 <body>
 
-    <!-- Encabezado de la pagina -->
     <div class="encabezado">
         <h1>Sistema de usuarios</h1>
     </div>
 
-    <!-- Formulario de registro -->
     <div class="contenido">
 
         <h2>Registro de usuarios</h2>
+
+        <img src="imagenes/registro.png" alt="Imagen de registro" class="imagen">
+
         <p class="descripcion">Ingresa tus datos para crear una cuenta.</p>
 
         <form method="POST">
@@ -92,7 +87,6 @@ if (isset($_POST['registrar'])) {
 
         </form>
 
-        <!-- Mensaje del resultado -->
         <p class="mensaje"><?php echo htmlspecialchars($mensaje); ?></p>
 
         <p>¿Ya tienes una cuenta? <a href="login.php">Inicia sesion</a></p>
