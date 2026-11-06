@@ -1,23 +1,14 @@
 
 <?php
 session_start();
-
 $mensaje = "";
-
-// Revisamos si se presiono el boton de ingresar
 if (isset($_POST['ingresar'])) {
 
-    // Obtenemos los datos del formulario
     $usuario = trim($_POST['usuario']);
     $password = $_POST['password'];
-
-    // Comprobamos si el usuario esta registrado
     if (isset($_SESSION['usuarios'][$usuario])) {
 
-        // Obtenemos la contraseña protegida
         $hash = $_SESSION['usuarios'][$usuario]['password'];
-
-        // Comparamos la contraseña escrita con la guardada
         if (password_verify($password, $hash)) {
 
             $nombre = $_SESSION['usuarios'][$usuario]['nombre'];
@@ -27,13 +18,11 @@ if (isset($_POST['ingresar'])) {
         } else {
             $mensaje = "La contraseña es incorrecta.";
         }
-
     } else {
         $mensaje = "El usuario no esta registrado.";
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -44,15 +33,16 @@ if (isset($_POST['ingresar'])) {
 </head>
 <body>
 
-    <!-- Encabezado de la pagina -->
     <div class="encabezado">
         <h1>Sistema de usuarios</h1>
     </div>
 
-    <!-- Formulario para iniciar sesion -->
     <div class="contenido">
 
         <h2>Inicio de sesion</h2>
+
+        <img src="imagenes/login.png" alt="Imagen de inicio de sesion" class="imagen">
+
         <p class="descripcion">Ingresa tu usuario y contraseña.</p>
 
         <form method="POST">
